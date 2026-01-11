@@ -55,7 +55,7 @@
             return settings.colors.noData;
         }
 
-        const pop = parseInt(population);
+        const pop = parseInt(population, 10);
         if (isNaN(pop)) {
             return settings.colors.noData;
         }
@@ -209,7 +209,8 @@
         // Event listeners
         document.getElementById('saveSettingsBtn').addEventListener('click', () => {
             settings.attackModeEnabled = document.getElementById('attackModeToggle').checked;
-            settings.daysToIgnore = parseInt(document.getElementById('daysToIgnoreInput').value);
+            const daysInput = parseInt(document.getElementById('daysToIgnoreInput').value, 10);
+            settings.daysToIgnore = (!isNaN(daysInput) && daysInput >= 0) ? daysInput : 3;
             settings.colors.range0_10k = document.getElementById('color0_10k').value;
             settings.colors.range10_20k = document.getElementById('color10_20k').value;
             settings.colors.range20_50k = document.getElementById('color20_50k').value;
@@ -368,17 +369,23 @@
         // - #map_village_123 (where 123 is village_id)
         // - Elements with data-villageid, data-coords, etc.
         
-        const villageElement = document.querySelector(`[data-id="${village.village_id}"]`);
+        // Sanitize village ID to prevent CSS selector injection
+        const villageId = String(village.village_id).replace(/[^a-zA-Z0-9_-]/g, '');
+        const villageElement = document.querySelector(`[data-id="${villageId}"]`);
         if (villageElement) {
             villageElement.style.backgroundColor = color;
             villageElement.style.opacity = '0.7';
         }
         
-        // Alternative: find by coordinates
-        const coordElement = document.querySelector(`[data-x="${village.x}"][data-y="${village.y}"]`);
-        if (coordElement) {
-            coordElement.style.backgroundColor = color;
-            coordElement.style.opacity = '0.7';
+        // Alternative: find by coordinates (validate as numbers)
+        const x = parseInt(village.x, 10);
+        const y = parseInt(village.y, 10);
+        if (!isNaN(x) && !isNaN(y)) {
+            const coordElement = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            if (coordElement) {
+                coordElement.style.backgroundColor = color;
+                coordElement.style.opacity = '0.7';
+            }
         }
     }
 
@@ -388,8 +395,15 @@
         
         // Attack mode could highlight villages differently, add borders, etc.
         villages.forEach(village => {
-            const villageElement = document.querySelector(`[data-id="${village.village_id}"]`) ||
-                                 document.querySelector(`[data-x="${village.x}"][data-y="${village.y}"]`);
+            // Sanitize village ID to prevent CSS selector injection
+            const villageId = String(village.village_id).replace(/[^a-zA-Z0-9_-]/g, '');
+            const x = parseInt(village.x, 10);
+            const y = parseInt(village.y, 10);
+            
+            let villageElement = document.querySelector(`[data-id="${villageId}"]`);
+            if (!villageElement && !isNaN(x) && !isNaN(y)) {
+                villageElement = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            }
             
             if (villageElement) {
                 // Add red border for attack mode
