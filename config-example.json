@@ -1,0 +1,125 @@
+{
+  "description": "Example configuration and data structure for Tribal Wars Intel Overlay",
+  "settings": {
+    "attackModeEnabled": false,
+    "daysToIgnore": 3,
+    "colors": {
+      "range0_10k": "#00FF00",
+      "range10_20k": "#ADD8E6",
+      "range20_50k": "#FFFF00",
+      "range50_100k": "#FFB6C1",
+      "range100kPlus": "#8B0000",
+      "noData": "#808080"
+    }
+  },
+  "exampleData": {
+    "description": "Example structure for tw_village_intel_latest table data",
+    "schema": {
+      "village_id": "number - Unique identifier for the village",
+      "x": "number - X coordinate on the map",
+      "y": "number - Y coordinate on the map",
+      "pop_survivors": "number - Survivor population count",
+      "updated_at": "string - ISO 8601 timestamp of last update"
+    },
+    "sampleRecords": [
+      {
+        "village_id": 12345,
+        "x": 500,
+        "y": 500,
+        "pop_survivors": 5000,
+        "updated_at": "2026-01-11T12:00:00Z"
+      },
+      {
+        "village_id": 12346,
+        "x": 501,
+        "y": 500,
+        "pop_survivors": 15000,
+        "updated_at": "2026-01-10T14:30:00Z"
+      },
+      {
+        "village_id": 12347,
+        "x": 502,
+        "y": 500,
+        "pop_survivors": 35000,
+        "updated_at": "2026-01-09T09:15:00Z"
+      },
+      {
+        "village_id": 12348,
+        "x": 503,
+        "y": 500,
+        "pop_survivors": 75000,
+        "updated_at": "2026-01-11T08:45:00Z"
+      },
+      {
+        "village_id": 12349,
+        "x": 504,
+        "y": 500,
+        "pop_survivors": 120000,
+        "updated_at": "2026-01-08T16:20:00Z"
+      },
+      {
+        "village_id": 12350,
+        "x": 505,
+        "y": 500,
+        "pop_survivors": null,
+        "updated_at": "2026-01-07T11:00:00Z"
+      }
+    ]
+  },
+  "populationRanges": {
+    "range1": {
+      "min": 0,
+      "max": 10000,
+      "label": "0k - 10k",
+      "defaultColor": "#00FF00",
+      "description": "Very low population - easy target"
+    },
+    "range2": {
+      "min": 10000,
+      "max": 20000,
+      "label": "10k - 20k",
+      "defaultColor": "#ADD8E6",
+      "description": "Low population - moderate target"
+    },
+    "range3": {
+      "min": 20000,
+      "max": 50000,
+      "label": "20k - 50k",
+      "defaultColor": "#FFFF00",
+      "description": "Medium population - challenging target"
+    },
+    "range4": {
+      "min": 50000,
+      "max": 100000,
+      "label": "50k - 100k",
+      "defaultColor": "#FFB6C1",
+      "description": "High population - difficult target"
+    },
+    "range5": {
+      "min": 100000,
+      "max": null,
+      "label": "100k+",
+      "defaultColor": "#8B0000",
+      "description": "Very high population - very difficult target"
+    },
+    "noData": {
+      "min": null,
+      "max": null,
+      "label": "Missing Information",
+      "defaultColor": "#808080",
+      "description": "No intelligence data available"
+    }
+  },
+  "features": {
+    "attackMode": {
+      "description": "When enabled, applies red borders and shadows to villages for easy identification of targets",
+      "defaultEnabled": false
+    },
+    "daysFilter": {
+      "description": "Filters out intelligence reports older than the specified number of days",
+      "defaultValue": 3,
+      "minValue": 0,
+      "maxValue": 365
+    }
+  }
+}
