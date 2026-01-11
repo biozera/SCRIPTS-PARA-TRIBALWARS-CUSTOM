@@ -372,7 +372,9 @@
         // Sanitize village ID to prevent CSS selector injection
         const villageId = String(village.village_id).replace(/[^a-zA-Z0-9_-]/g, '');
         if (villageId) {
-            const villageElement = document.querySelector(`[data-id="${villageId}"]`);
+            // Use CSS.escape if available, otherwise use sanitized value
+            const escapedId = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(villageId) : villageId;
+            const villageElement = document.querySelector(`[data-id="${escapedId}"]`);
             if (villageElement) {
                 villageElement.style.backgroundColor = color;
                 villageElement.style.opacity = '0.7';
@@ -383,7 +385,10 @@
         const x = parseInt(village.x, 10);
         const y = parseInt(village.y, 10);
         if (!isNaN(x) && !isNaN(y)) {
-            const coordElement = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+            // Use CSS.escape if available for coordinates too
+            const escapedX = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(String(x)) : x;
+            const escapedY = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(String(y)) : y;
+            const coordElement = document.querySelector(`[data-x="${escapedX}"][data-y="${escapedY}"]`);
             if (coordElement) {
                 coordElement.style.backgroundColor = color;
                 coordElement.style.opacity = '0.7';
@@ -404,10 +409,13 @@
             
             let villageElement = null;
             if (villageId) {
-                villageElement = document.querySelector(`[data-id="${villageId}"]`);
+                const escapedId = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(villageId) : villageId;
+                villageElement = document.querySelector(`[data-id="${escapedId}"]`);
             }
             if (!villageElement && !isNaN(x) && !isNaN(y)) {
-                villageElement = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+                const escapedX = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(String(x)) : x;
+                const escapedY = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(String(y)) : y;
+                villageElement = document.querySelector(`[data-x="${escapedX}"][data-y="${escapedY}"]`);
             }
             
             if (villageElement) {
@@ -418,8 +426,16 @@
         });
     }
 
+    // Prevent duplicate initialization
+    let isInitialized = false;
+
     // Initialize the script
     function init() {
+        if (isInitialized) {
+            console.log('Tribal Wars Intel Overlay já foi inicializado.');
+            return;
+        }
+        
         console.log('Tribal Wars Intel Overlay v1.0.1 inicializando...');
         
         // Wait for page to be fully loaded
@@ -427,6 +443,9 @@
             document.addEventListener('DOMContentLoaded', init);
             return;
         }
+
+        // Mark as initialized
+        isInitialized = true;
 
         // Create UI elements
         createSettingsPanel();
