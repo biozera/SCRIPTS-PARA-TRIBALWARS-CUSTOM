@@ -84,6 +84,41 @@ Settings are stored using GM_setValue/GM_getValue for persistence across session
 - `applyVillageColor(village, color)`: Applies color to a village on the map
 - `applyAttackModeIndicators(villages)`: Adds attack mode visual indicators
 
+## Integration Notes
+
+### Data Fetching
+The `fetchVillageIntelData()` function is currently a placeholder that returns an empty array. To integrate with your actual data source:
+
+1. **Database Integration**: If using a database, implement API calls to fetch from `tw_village_intel_latest`
+2. **Local Storage**: If data is stored locally, read from localStorage or IndexedDB
+3. **API Endpoint**: If using an external API, make HTTP requests to your endpoint
+
+Example implementation:
+```javascript
+function fetchVillageIntelData() {
+    // Option 1: Fetch from API
+    return fetch('/api/village-intel')
+        .then(r => r.json())
+        .catch(e => { console.error(e); return []; });
+    
+    // Option 2: Read from localStorage
+    const data = localStorage.getItem('villageIntel');
+    return data ? JSON.parse(data) : [];
+}
+```
+
+### DOM Integration
+The `applyVillageColor()` function uses placeholder selectors. To integrate with Tribal Wars:
+
+1. Inspect the Tribal Wars map DOM structure
+2. Identify the actual selectors for village elements
+3. Update the selectors in `applyVillageColor()` accordingly
+
+Common Tribal Wars selectors might be:
+- `.village` or `.map-village`
+- `#map_village_123` (where 123 is the village ID)
+- Elements with specific data attributes
+
 ## Customization
 
 ### Extending Population Ranges

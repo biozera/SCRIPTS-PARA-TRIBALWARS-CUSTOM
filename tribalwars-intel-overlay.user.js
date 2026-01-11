@@ -282,21 +282,23 @@
 
     // Fetch village intel data from database or API
     function fetchVillageIntelData() {
-        // This is a placeholder - in a real implementation, this would fetch from
-        // the tw_village_intel_latest table or an API endpoint
-        // Example data structure:
-        /*
-        return [
-            {
-                village_id: 123,
-                x: 500,
-                y: 500,
-                pop_survivors: 5000,
-                updated_at: '2026-01-10T12:00:00Z'
-            },
-            // ... more villages
-        ];
-        */
+        // ⚠️ INTEGRATION REQUIRED ⚠️
+        // This is a placeholder - in a real implementation, this would fetch from:
+        // 1. Database API endpoint (e.g., fetch('/api/village-intel'))
+        // 2. Local storage (localStorage.getItem('villageIntel'))
+        // 3. IndexedDB or other data source
+        //
+        // Expected data structure:
+        // [
+        //   {
+        //     village_id: 123,
+        //     x: 500,
+        //     y: 500,
+        //     pop_survivors: 5000,
+        //     updated_at: '2026-01-10T12:00:00Z'
+        //   },
+        //   ...
+        // ]
         
         // For now, return empty array - this should be replaced with actual data fetching
         return [];
@@ -352,8 +354,20 @@
 
     // Apply color to a village on the map
     function applyVillageColor(village, color) {
-        // This is a placeholder - actual implementation would depend on
-        // how the Tribal Wars map is structured
+        // ⚠️ INTEGRATION REQUIRED ⚠️
+        // This function uses placeholder selectors that need to be updated
+        // to match the actual Tribal Wars DOM structure.
+        //
+        // To integrate:
+        // 1. Inspect the Tribal Wars map in browser DevTools
+        // 2. Find the actual selectors for village elements
+        // 3. Update the selectors below accordingly
+        //
+        // Common patterns might be:
+        // - .village, .map-village, .village-marker
+        // - #map_village_123 (where 123 is village_id)
+        // - Elements with data-villageid, data-coords, etc.
+        
         const villageElement = document.querySelector(`[data-id="${village.village_id}"]`);
         if (villageElement) {
             villageElement.style.backgroundColor = color;
