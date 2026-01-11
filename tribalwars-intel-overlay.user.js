@@ -51,12 +51,12 @@
 
     // Get color based on population
     function getColorForPopulation(population) {
-        if (population === null || population === undefined) {
+        if (population === null || population === undefined || population === '') {
             return settings.colors.noData;
         }
 
         const pop = parseInt(population, 10);
-        if (isNaN(pop)) {
+        if (isNaN(pop) || pop < 0) {
             return settings.colors.noData;
         }
 
@@ -210,7 +210,7 @@
         document.getElementById('saveSettingsBtn').addEventListener('click', () => {
             settings.attackModeEnabled = document.getElementById('attackModeToggle').checked;
             const daysInput = parseInt(document.getElementById('daysToIgnoreInput').value, 10);
-            settings.daysToIgnore = (!isNaN(daysInput) && daysInput >= 0) ? daysInput : 3;
+            settings.daysToIgnore = (!isNaN(daysInput) && daysInput >= 0) ? daysInput : DEFAULT_SETTINGS.daysToIgnore;
             settings.colors.range0_10k = document.getElementById('color0_10k').value;
             settings.colors.range10_20k = document.getElementById('color10_20k').value;
             settings.colors.range20_50k = document.getElementById('color20_50k').value;
@@ -371,10 +371,12 @@
         
         // Sanitize village ID to prevent CSS selector injection
         const villageId = String(village.village_id).replace(/[^a-zA-Z0-9_-]/g, '');
-        const villageElement = document.querySelector(`[data-id="${villageId}"]`);
-        if (villageElement) {
-            villageElement.style.backgroundColor = color;
-            villageElement.style.opacity = '0.7';
+        if (villageId) {
+            const villageElement = document.querySelector(`[data-id="${villageId}"]`);
+            if (villageElement) {
+                villageElement.style.backgroundColor = color;
+                villageElement.style.opacity = '0.7';
+            }
         }
         
         // Alternative: find by coordinates (validate as numbers)
@@ -400,7 +402,10 @@
             const x = parseInt(village.x, 10);
             const y = parseInt(village.y, 10);
             
-            let villageElement = document.querySelector(`[data-id="${villageId}"]`);
+            let villageElement = null;
+            if (villageId) {
+                villageElement = document.querySelector(`[data-id="${villageId}"]`);
+            }
             if (!villageElement && !isNaN(x) && !isNaN(y)) {
                 villageElement = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
             }
