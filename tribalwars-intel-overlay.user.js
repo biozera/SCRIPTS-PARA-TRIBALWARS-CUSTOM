@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Tribal Wars Intel Overlay
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
-// @description  Village intelligence overlay for Tribal Wars with attack mode and population-based colors
+// @version      1.0.1
+// @description  Overlay de inteligência de aldeias para Tribal Wars com modo de ataque e cores baseadas em população
 // @author       biozera
 // @match        https://*.tribalwars.*/game.php*
 // @grant        GM_getValue
@@ -114,27 +114,27 @@
 
         panel.innerHTML = `
             <h2 style="margin-top: 0; color: #7d510f; border-bottom: 2px solid #7d510f; padding-bottom: 10px;">
-                Intel Overlay Settings
+                Configurações do Overlay de Inteligência
             </h2>
             
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-weight: bold;">
                     <input type="checkbox" id="attackModeToggle" ${settings.attackModeEnabled ? 'checked' : ''}>
-                    Enable Attack Mode
+                    Habilitar Modo de Ataque
                 </label>
             </div>
 
             <div style="margin-bottom: 15px;">
                 <label style="display: block; margin-bottom: 5px; font-weight: bold;">
-                    Days to ignore notes:
+                    Dias para ignorar relatórios:
                 </label>
                 <input type="number" id="daysToIgnoreInput" value="${settings.daysToIgnore}" 
                        min="0" max="365" style="width: 100%; padding: 5px; border: 1px solid #7d510f;">
-                <small style="color: #666;">Reports older than this will be filtered out</small>
+                <small style="color: #666;">Relatórios mais antigos que isso serão filtrados</small>
             </div>
 
             <h3 style="color: #7d510f; border-bottom: 1px solid #7d510f; padding-bottom: 5px; margin-top: 20px;">
-                Population Color Ranges
+                Faixas de Cores por População
             </h3>
 
             <div style="margin-bottom: 10px;">
@@ -168,7 +168,7 @@
             </div>
 
             <div style="margin-bottom: 10px;">
-                <label style="display: block; margin-bottom: 3px; font-weight: bold;">Missing Information:</label>
+                <label style="display: block; margin-bottom: 3px; font-weight: bold;">Informação Ausente:</label>
                 <input type="color" id="colorNoData" value="${settings.colors.noData}" 
                        style="width: 100%; height: 40px; border: 1px solid #7d510f; cursor: pointer;">
             </div>
@@ -182,7 +182,7 @@
                     border: none;
                     cursor: pointer;
                     font-weight: bold;
-                ">Save</button>
+                ">Salvar</button>
                 <button id="resetSettingsBtn" style="
                     flex: 1;
                     padding: 10px;
@@ -191,7 +191,7 @@
                     border: none;
                     cursor: pointer;
                     font-weight: bold;
-                ">Reset to Defaults</button>
+                ">Restaurar Padrões</button>
                 <button id="closeSettingsBtn" style="
                     flex: 1;
                     padding: 10px;
@@ -200,7 +200,7 @@
                     border: none;
                     cursor: pointer;
                     font-weight: bold;
-                ">Cancel</button>
+                ">Cancelar</button>
             </div>
         `;
 
@@ -221,11 +221,11 @@
             saveSettings(settings);
             panel.style.display = 'none';
             redrawMapOverlay();
-            alert('Settings saved successfully!');
+            alert('Configurações salvas com sucesso!');
         });
 
         document.getElementById('resetSettingsBtn').addEventListener('click', () => {
-            if (confirm('Are you sure you want to reset all settings to defaults?')) {
+            if (confirm('Tem certeza que deseja restaurar todas as configurações para os valores padrão?')) {
                 settings = { ...DEFAULT_SETTINGS };
                 saveSettings(settings);
                 document.getElementById('attackModeToggle').checked = settings.attackModeEnabled;
@@ -236,7 +236,7 @@
                 document.getElementById('color50_100k').value = settings.colors.range50_100k;
                 document.getElementById('color100kPlus').value = settings.colors.range100kPlus;
                 document.getElementById('colorNoData').value = settings.colors.noData;
-                alert('Settings reset to defaults!');
+                alert('Configurações restauradas para os padrões!');
             }
         });
 
@@ -251,7 +251,7 @@
     function createSettingsButton() {
         const button = document.createElement('button');
         button.id = 'twIntelSettingsBtn';
-        button.textContent = '⚙️ Intel Settings';
+        button.textContent = '⚙️ Configurações Intel';
         button.style.cssText = `
             position: fixed;
             top: 10px;
@@ -307,11 +307,11 @@
 
     // Install map overlay hook
     function installMapOverlayHook() {
-        console.log('Installing Tribal Wars Intel Overlay...');
+        console.log('Instalando Tribal Wars Intel Overlay...');
         
         // Check if TWMap exists (Tribal Wars map object)
         if (typeof TWMap === 'undefined') {
-            console.warn('TWMap not found, retrying in 1 second...');
+            console.warn('TWMap não encontrado, tentando novamente em 1 segundo...');
             setTimeout(installMapOverlayHook, 1000);
             return;
         }
@@ -331,12 +331,12 @@
         // Initial draw
         redrawMapOverlay();
         
-        console.log('Tribal Wars Intel Overlay installed successfully!');
+        console.log('Tribal Wars Intel Overlay instalado com sucesso!');
     }
 
     // Redraw map overlay with current settings
     function redrawMapOverlay() {
-        console.log('Redrawing map overlay...');
+        console.log('Redesenhando overlay do mapa...');
         
         // Filter data based on settings
         const filteredData = filterRecentData(villageIntelData, settings.daysToIgnore);
@@ -391,7 +391,7 @@
 
     // Apply attack mode visual indicators
     function applyAttackModeIndicators(villages) {
-        console.log('Applying attack mode indicators to', villages.length, 'villages');
+        console.log('Aplicando indicadores do modo de ataque em', villages.length, 'aldeias');
         
         // Attack mode could highlight villages differently, add borders, etc.
         villages.forEach(village => {
@@ -415,7 +415,7 @@
 
     // Initialize the script
     function init() {
-        console.log('Tribal Wars Intel Overlay v1.0.0 initializing...');
+        console.log('Tribal Wars Intel Overlay v1.0.1 inicializando...');
         
         // Wait for page to be fully loaded
         if (document.readyState === 'loading') {
@@ -430,7 +430,7 @@
         // Install map overlay hook
         installMapOverlayHook();
         
-        console.log('Intel Overlay initialized. Attack Mode:', settings.attackModeEnabled);
+        console.log('Intel Overlay inicializado. Modo de Ataque:', settings.attackModeEnabled);
     }
 
     // Start the script

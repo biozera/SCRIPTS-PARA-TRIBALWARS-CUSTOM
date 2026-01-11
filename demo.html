@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tribal Wars Intel Overlay - Settings Demo</title>
+    <title>Tribal Wars Intel Overlay - Demonstração</title>
     <style>
         body {
             font-family: Verdana, Arial, sans-serif;
@@ -154,89 +154,89 @@
 </head>
 <body>
     <div class="container">
-        <h1>🗡️ Tribal Wars Intel Overlay - Demo</h1>
+        <h1>🗡️ Tribal Wars Intel Overlay - Demonstração</h1>
         
         <div class="demo-section">
-            <h2>Features Overview</h2>
+            <h2>Resumo das Funcionalidades</h2>
             <ul class="feature-list">
-                <li><strong>Attack Mode:</strong> Toggle to enable special visual indicators for villages</li>
-                <li><strong>Population-Based Colors:</strong> Automatic color coding based on survivor population</li>
-                <li><strong>Customizable Colors:</strong> Personalize colors for each population range</li>
-                <li><strong>Recent Reports Filter:</strong> Filter out old intelligence based on update date</li>
+                <li><strong>Modo de Ataque:</strong> Ative para habilitar indicadores visuais especiais nas aldeias</li>
+                <li><strong>Cores Baseadas em População:</strong> Codificação automática de cores baseada na população de sobreviventes</li>
+                <li><strong>Cores Personalizáveis:</strong> Personalize as cores para cada faixa de população</li>
+                <li><strong>Filtro de Relatórios Recentes:</strong> Filtre informações antigas baseado na data de atualização</li>
             </ul>
         </div>
         
         <div class="demo-section">
-            <h2>Default Color Scheme</h2>
+            <h2>Esquema de Cores Padrão</h2>
             <div class="color-legend">
                 <div class="color-item">
                     <div class="color-box" style="background: #00FF00;"></div>
                     <div>
                         <strong>0k - 10k</strong><br>
-                        <small>Green (#00FF00)</small>
+                        <small>Verde (#00FF00)</small>
                     </div>
                 </div>
                 <div class="color-item">
                     <div class="color-box" style="background: #ADD8E6;"></div>
                     <div>
                         <strong>10k - 20k</strong><br>
-                        <small>Light Blue (#ADD8E6)</small>
+                        <small>Azul Claro (#ADD8E6)</small>
                     </div>
                 </div>
                 <div class="color-item">
                     <div class="color-box" style="background: #FFFF00;"></div>
                     <div>
                         <strong>20k - 50k</strong><br>
-                        <small>Yellow (#FFFF00)</small>
+                        <small>Amarelo (#FFFF00)</small>
                     </div>
                 </div>
                 <div class="color-item">
                     <div class="color-box" style="background: #FFB6C1;"></div>
                     <div>
                         <strong>50k - 100k</strong><br>
-                        <small>Light Red (#FFB6C1)</small>
+                        <small>Vermelho Claro (#FFB6C1)</small>
                     </div>
                 </div>
                 <div class="color-item">
                     <div class="color-box" style="background: #8B0000;"></div>
                     <div>
                         <strong>100k+</strong><br>
-                        <small>Dark Red (#8B0000)</small>
+                        <small>Vermelho Escuro (#8B0000)</small>
                     </div>
                 </div>
                 <div class="color-item">
                     <div class="color-box" style="background: #808080;"></div>
                     <div>
-                        <strong>Missing Data</strong><br>
-                        <small>Gray (#808080)</small>
+                        <strong>Dados Ausentes</strong><br>
+                        <small>Cinza (#808080)</small>
                     </div>
                 </div>
             </div>
         </div>
         
         <div class="demo-section">
-            <h2>Settings Panel Preview</h2>
+            <h2>Prévia do Painel de Configurações</h2>
             <p style="text-align: center; color: #666;">
-                This is how the settings panel appears when you click the ⚙️ Intel Settings button in-game:
+                É assim que o painel de configurações aparece quando você clica no botão ⚙️ Configurações Intel no jogo:
             </p>
             
             <div class="settings-panel">
-                <h2>Intel Overlay Settings</h2>
+                <h2>Configurações do Overlay de Inteligência</h2>
                 
                 <div class="form-group">
                     <label>
                         <input type="checkbox" id="attackMode" checked>
-                        Enable Attack Mode
+                        Habilitar Modo de Ataque
                     </label>
                 </div>
 
                 <div class="form-group">
-                    <label>Days to ignore notes:</label>
+                    <label>Dias para ignorar relatórios:</label>
                     <input type="number" id="daysToIgnore" value="3" min="0" max="365">
-                    <small>Reports older than this will be filtered out</small>
+                    <small>Relatórios mais antigos que isso serão filtrados</small>
                 </div>
 
-                <h3>Population Color Ranges</h3>
+                <h3>Faixas de Cores por População</h3>
 
                 <div class="color-preview">
                     <label>0k - 10k:</label>
@@ -264,39 +264,39 @@
                 </div>
 
                 <div class="color-preview">
-                    <label>Missing Information:</label>
+                    <label>Informação Ausente:</label>
                     <input type="color" id="color6" value="#808080">
                 </div>
 
                 <div class="button-group">
-                    <button class="btn-save" onclick="alert('Settings saved!')">Save</button>
-                    <button class="btn-reset" onclick="alert('Reset to defaults!')">Reset to Defaults</button>
-                    <button class="btn-cancel" onclick="alert('Cancelled!')">Cancel</button>
+                    <button class="btn-save" onclick="alert('Configurações salvas!')">Salvar</button>
+                    <button class="btn-reset" onclick="alert('Restaurado para os padrões!')">Restaurar Padrões</button>
+                    <button class="btn-cancel" onclick="alert('Cancelado!')">Cancelar</button>
                 </div>
             </div>
         </div>
         
         <div class="demo-section">
-            <h2>How to Install</h2>
+            <h2>Como Instalar</h2>
             <ol>
-                <li>Install <a href="https://www.tampermonkey.net/" target="_blank">Tampermonkey</a> or another userscript manager</li>
-                <li>Open <code>tribalwars-intel-overlay.user.js</code> in your userscript manager</li>
-                <li>Click "Install" when prompted</li>
-                <li>Navigate to your Tribal Wars game</li>
-                <li>Look for the ⚙️ Intel Settings button in the top-right corner</li>
+                <li>Instale o <a href="https://www.tampermonkey.net/" target="_blank">Tampermonkey</a> ou outro gerenciador de userscripts</li>
+                <li>Abra o arquivo <code>tribalwars-intel-overlay.user.js</code> no seu gerenciador de userscripts</li>
+                <li>Clique em "Instalar" quando solicitado</li>
+                <li>Navegue até seu jogo Tribal Wars</li>
+                <li>Procure pelo botão ⚙️ Configurações Intel no canto superior direito</li>
             </ol>
         </div>
         
         <div class="demo-section">
-            <h2>Technical Details</h2>
-            <p><strong>Data Source:</strong> <code>tw_village_intel_latest</code> table</p>
-            <p><strong>Key Columns:</strong></p>
+            <h2>Detalhes Técnicos</h2>
+            <p><strong>Fonte de Dados:</strong> Tabela <code>tw_village_intel_latest</code></p>
+            <p><strong>Colunas Principais:</strong></p>
             <ul>
-                <li><code>pop_survivors</code> - Population count for color classification</li>
-                <li><code>updated_at</code> - Timestamp for filtering recent reports</li>
-                <li><code>village_id</code>, <code>x</code>, <code>y</code> - Village identification</li>
+                <li><code>pop_survivors</code> - Contagem de população para classificação de cores</li>
+                <li><code>updated_at</code> - Timestamp para filtrar relatórios recentes</li>
+                <li><code>village_id</code>, <code>x</code>, <code>y</code> - Identificação da aldeia</li>
             </ul>
-            <p><strong>Storage:</strong> Settings persist using GM_setValue/GM_getValue</p>
+            <p><strong>Armazenamento:</strong> Configurações persistem usando GM_setValue/GM_getValue</p>
         </div>
     </div>
 </body>
