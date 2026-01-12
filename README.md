@@ -1,167 +1,74 @@
-# Tribal Wars Intel Overlay Script
+# Tribal Wars Intel Overlay - Script Completo
 
-A custom userscript for Tribal Wars that provides an intelligent village overlay system with population-based coloring and attack mode features.
+Script userscript completo para Tribal Wars com overlay de inteligência, modo de ataque e cores baseadas em população de sobreviventes.
 
-## Features
+## 🚀 Instalação Rápida
 
-### 1. **Attack Mode Toggle**
-- Enable/disable attack mode to highlight villages with special indicators
-- When enabled, villages are marked with red borders and shadows for easy identification
+1. Instale o [Tampermonkey](https://www.tampermonkey.net/) no seu navegador
+2. Abra o arquivo `tribalwars-intel-overlay-completo.user.js`
+3. Clique em "Instalar" quando solicitado
+4. Acesse o Tribal Wars
+5. Clique no botão ⚙️ Configurações Intel (canto superior direito)
 
-### 2. **Population-Based Color Mapping**
-The script automatically colors villages based on their survivor population (`pop_survivors`):
-- **0k - 10k**: Green (default: `#00FF00`)
-- **10k - 20k**: Light Blue (default: `#ADD8E6`)
-- **20k - 50k**: Yellow (default: `#FFFF00`)
-- **50k - 100k**: Light Red (default: `#FFB6C1`)
-- **100k+**: Dark Red (default: `#8B0000`)
-- **Missing Information**: Gray (default: `#808080`)
+## ✨ Funcionalidades
 
-### 3. **Customizable Colors**
-- Full customization of all color ranges through an intuitive settings panel
-- Color changes are saved automatically to persistent storage
-- Reset to defaults option available
+- **Modo de Ataque**: Toggle com indicadores visuais (bordas e sombras vermelhas)
+- **Cores por População**: 6 faixas baseadas em `pop_survivors`:
+  - 0k-10k: Verde (#00FF00)
+  - 10k-20k: Azul Claro (#ADD8E6)
+  - 20k-50k: Amarelo (#FFFF00)
+  - 50k-100k: Vermelho Claro (#FFB6C1)
+  - 100k+: Vermelho Escuro (#8B0000)
+  - Sem dados: Cinza (#808080)
+- **Cores Personalizáveis**: Painel completo de configuração
+- **Filtro Temporal**: Campo "Dias para ignorar relatórios" (padrão: 3 dias)
 
-### 4. **Recent Reports Filter**
-- "Days to ignore note" field (default: 3 days)
-- Filters out intelligence reports older than the specified number of days
-- Based on the `updated_at` field from the `tw_village_intel_latest` table
+## ⚙️ Integração Necessária
 
-## Installation
+O script contém **toda a documentação integrada como comentários**. Você precisa customizar duas funções:
 
-1. Install a userscript manager:
-   - [Tampermonkey](https://www.tampermonkey.net/) (Chrome, Firefox, Safari, Edge)
-   - [Greasemonkey](https://www.greasespot.net/) (Firefox)
-   - [Violentmonkey](https://violentmonkey.github.io/) (Chrome, Firefox, Edge)
+### 1. fetchVillageIntelData()
+Conectar à sua fonte de dados `tw_village_intel_latest`. O script inclui exemplos para:
+- API REST
+- localStorage
+- GraphQL
+- Dados de teste
 
-2. Click on the raw file link for `tribalwars-intel-overlay.user.js`
+### 2. applyVillageColor()
+Ajustar os seletores CSS para corresponder à estrutura DOM do seu Tribal Wars.
 
-3. Your userscript manager should prompt you to install the script
+**Todas as instruções detalhadas estão no próprio arquivo do script!**
 
-4. Navigate to any Tribal Wars game page to see the overlay in action
+## 📊 Estrutura de Dados
 
-## Usage
-
-### Accessing Settings
-1. Look for the **⚙️ Intel Settings** button in the top-right corner of the game
-2. Click to open the settings panel
-
-### Configuring the Script
-- **Enable Attack Mode**: Check/uncheck to toggle attack mode
-- **Days to ignore notes**: Set how many days of history to include (0-365)
-- **Population Color Ranges**: Click on any color picker to customize colors
-- **Save**: Apply and save your changes
-- **Reset to Defaults**: Restore all settings to default values
-- **Cancel**: Close without saving changes
-
-### How It Works
-1. The script fetches village intelligence data from the `tw_village_intel_latest` table
-2. Data is filtered based on the "days to ignore" setting using the `updated_at` field
-3. Villages are colored on the map according to their `pop_survivors` value
-4. If attack mode is enabled, additional visual indicators are applied
-5. The overlay automatically updates when you navigate the map
-
-## Technical Details
-
-### Data Schema
-The script expects data from `tw_village_intel_latest` with the following columns:
-- `village_id`: Unique identifier for the village
-- `x`, `y`: Village coordinates
-- `pop_survivors`: Population count (used for color classification)
-- `updated_at`: Timestamp of last update (ISO 8601 format)
-
-### Storage
-Settings are stored using GM_setValue/GM_getValue for persistence across sessions:
-- `attackModeEnabled`: Boolean
-- `daysToIgnore`: Number (0-365)
-- `colors`: Object with color hex codes for each range
-
-### Functions
-- `installMapOverlayHook()`: Initializes the overlay system and hooks into the map
-- `redrawMapOverlay()`: Redraws the overlay with current settings
-- `getColorForPopulation(pop)`: Returns the appropriate color for a population value
-- `filterRecentData(data, days)`: Filters data based on the days threshold
-- `applyVillageColor(village, color)`: Applies color to a village on the map
-- `applyAttackModeIndicators(villages)`: Adds attack mode visual indicators
-
-## Integration Notes
-
-### Data Fetching
-The `fetchVillageIntelData()` function is currently a placeholder that returns an empty array. To integrate with your actual data source:
-
-1. **Database Integration**: If using a database, implement API calls to fetch from `tw_village_intel_latest`
-2. **Local Storage**: If data is stored locally, read from localStorage or IndexedDB
-3. **API Endpoint**: If using an external API, make HTTP requests to your endpoint
-
-Example implementation:
-```javascript
-function fetchVillageIntelData() {
-    // Option 1: Fetch from API
-    return fetch('/api/village-intel')
-        .then(r => r.json())
-        .catch(e => { console.error(e); return []; });
-    
-    // Option 2: Read from localStorage
-    const data = localStorage.getItem('villageIntel');
-    return data ? JSON.parse(data) : [];
-}
+```json
+[
+  {
+    "village_id": 12345,
+    "x": 500,
+    "y": 500,
+    "pop_survivors": 15000,
+    "updated_at": "2026-01-10T14:30:00Z"
+  }
+]
 ```
 
-### DOM Integration
-The `applyVillageColor()` function uses placeholder selectors. To integrate with Tribal Wars:
+## 🔒 Segurança
 
-1. Inspect the Tribal Wars map DOM structure
-2. Identify the actual selectors for village elements
-3. Update the selectors in `applyVillageColor()` accordingly
+- CSS.escape() nativo com fallback
+- Validação defensiva de entradas
+- parseInt com radix explícito
+- Prevenção de inicialização duplicada
 
-Common Tribal Wars selectors might be:
-- `.village` or `.map-village`
-- `#map_village_123` (where 123 is the village ID)
-- Elements with specific data attributes
+## 📝 Arquivo Único
 
-## Customization
+Todo o código, documentação, exemplos e instruções estão em um único arquivo:
+- `tribalwars-intel-overlay-completo.user.js`
 
-### Extending Population Ranges
-To add custom population ranges, modify the `getColorForPopulation()` function:
+## 💡 Suporte
 
-```javascript
-function getColorForPopulation(population) {
-    // Add your custom ranges here
-    if (pop < 5000) {
-        return '#CUSTOM_COLOR';
-    }
-    // ... existing ranges
-}
-```
-
-### Custom Attack Mode Behavior
-Modify the `applyAttackModeIndicators()` function to change how attack mode highlights villages:
-
-```javascript
-function applyAttackModeIndicators(villages) {
-    villages.forEach(village => {
-        // Custom highlighting logic
-    });
-}
-```
-
-## Compatibility
-- Designed for Tribal Wars (all versions)
-- Requires a modern browser with userscript support
-- Compatible with Tampermonkey, Greasemonkey, and Violentmonkey
-
-## Version History
-- **v1.0.0**: Initial release
-  - Attack mode toggle
-  - Population-based coloring
-  - Customizable color ranges
-  - Recent reports filter
-
-## License
-This script is provided as-is for personal use with Tribal Wars.
-
-## Contributing
-Feel free to fork and submit pull requests for improvements or bug fixes.
-
-## Support
-For issues or feature requests, please open an issue on GitHub.
+Consulte os comentários dentro do script para:
+- Exemplos de integração
+- Troubleshooting
+- Checklist de integração
+- Notas técnicas completas
